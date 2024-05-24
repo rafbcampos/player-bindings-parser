@@ -71,6 +71,32 @@ ____________________________
           (value [0, 6] - [0, 9])))
       (close_curl [0, 9] - [0, 10])
       (close_curl [0, 10] - [0, 11]))))
+
+____________________________
+
+{{hello}}{{world}}
+
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 18]
+    (modelRef [0, 0] - [0, 9]
+      (open_curl [0, 0] - [0, 1])
+      (open_curl [0, 1] - [0, 2])
+      (pathNode [0, 2] - [0, 7]
+        (segment [0, 2] - [0, 7]
+          (value [0, 2] - [0, 7])))
+      (close_curl [0, 7] - [0, 8])
+      (close_curl [0, 8] - [0, 9]))
+    (segment [0, 9] - [0, 18]
+      (modelRef [0, 9] - [0, 18]
+        (open_curl [0, 9] - [0, 10])
+        (open_curl [0, 10] - [0, 11])
+        (pathNode [0, 11] - [0, 16]
+          (segment [0, 11] - [0, 16]
+            (value [0, 11] - [0, 16])))
+        (close_curl [0, 16] - [0, 17])
+        (close_curl [0, 17] - [0, 18])))))
 ____________________________
 
 foo.bar.{{nested}}.baz
@@ -95,3 +121,130 @@ ____________________________
   (segment_separator [0, 18] - [0, 19])
   (segment [0, 19] - [0, 22]
     (value [0, 19] - [0, 22])))
+____________________________
+
+foo[a]["b"][c="bar"]
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 20]
+    (value [0, 0] - [0, 3])
+    (segment [0, 3] - [0, 6]
+      (query [0, 3] - [0, 6]
+        (open_bracket [0, 3] - [0, 4])
+        (segment [0, 4] - [0, 5]
+          (value [0, 4] - [0, 5]))
+        (close_bracket [0, 5] - [0, 6])))
+    (segment [0, 6] - [0, 11]
+      (query [0, 6] - [0, 11]
+        (open_bracket [0, 6] - [0, 7])
+        (segment [0, 7] - [0, 10]
+          (double_quote [0, 7] - [0, 8])
+          (value [0, 8] - [0, 9])
+          (double_quote [0, 9] - [0, 10]))
+        (close_bracket [0, 10] - [0, 11])))
+    (segment [0, 11] - [0, 20]
+      (query [0, 11] - [0, 20]
+        (open_bracket [0, 11] - [0, 12])
+        (segment [0, 12] - [0, 13]
+          (value [0, 12] - [0, 13]))
+        (equals [0, 13] - [0, 14])
+        (segment [0, 14] - [0, 19]
+          (double_quote [0, 14] - [0, 15])
+          (value [0, 15] - [0, 18])
+          (double_quote [0, 18] - [0, 19]))
+        (close_bracket [0, 19] - [0, 20])))))
+____________________________
+
+foo.`bar()`.baz
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 3]
+    (value [0, 0] - [0, 3]))
+  (segment_separator [0, 3] - [0, 4])
+  (segment [0, 4] - [0, 11]
+    (expression [0, 4] - [0, 11]
+      (back_tick [0, 4] - [0, 5])
+      (segment [0, 5] - [0, 8]
+        (value [0, 5] - [0, 8]))
+      (open_paren [0, 8] - [0, 9])
+      (close_paren [0, 9] - [0, 10])
+      (back_tick [0, 10] - [0, 11])))
+  (segment_separator [0, 11] - [0, 12])
+  (segment [0, 12] - [0, 15]
+    (value [0, 12] - [0, 15])))
+____________________________
+
+foo`bar()`.baz
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 10]
+    (value [0, 0] - [0, 3])
+    (segment [0, 3] - [0, 10]
+      (expression [0, 3] - [0, 10]
+        (back_tick [0, 3] - [0, 4])
+        (segment [0, 4] - [0, 7]
+          (value [0, 4] - [0, 7]))
+        (open_paren [0, 7] - [0, 8])
+        (close_paren [0, 8] - [0, 9])
+        (back_tick [0, 9] - [0, 10]))))
+  (segment_separator [0, 10] - [0, 11])
+  (segment [0, 11] - [0, 14]
+    (value [0, 11] - [0, 14])))
+____________________________
+
+`foo() == bar()`
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 16]
+    (expression [0, 0] - [0, 16]
+      (back_tick [0, 0] - [0, 1])
+      (segment [0, 1] - [0, 4]
+        (value [0, 1] - [0, 4]))
+      (open_paren [0, 4] - [0, 5])
+      (close_paren [0, 5] - [0, 6])
+      (equals [0, 7] - [0, 8])
+      (equals [0, 8] - [0, 9])
+      (segment [0, 10] - [0, 13]
+        (value [0, 10] - [0, 13]))
+      (open_paren [0, 13] - [0, 14])
+      (close_paren [0, 14] - [0, 15])
+      (back_tick [0, 15] - [0, 16]))))
+____________________________
+
+foo["readonly" = `foo() == bar()`].baz
+____________________________
+
+(pathNode [0, 0] - [1, 0]
+  (segment [0, 0] - [0, 34]
+    (value [0, 0] - [0, 3])
+    (segment [0, 3] - [0, 34]
+      (query [0, 3] - [0, 34]
+        (open_bracket [0, 3] - [0, 4])
+        (segment [0, 4] - [0, 14]
+          (double_quote [0, 4] - [0, 5])
+          (value [0, 5] - [0, 13])
+          (double_quote [0, 13] - [0, 14]))
+        (equals [0, 15] - [0, 16])
+        (segment [0, 17] - [0, 33]
+          (expression [0, 17] - [0, 33]
+            (back_tick [0, 17] - [0, 18])
+            (segment [0, 18] - [0, 21]
+              (value [0, 18] - [0, 21]))
+            (open_paren [0, 21] - [0, 22])
+            (close_paren [0, 22] - [0, 23])
+            (equals [0, 24] - [0, 25])
+            (equals [0, 25] - [0, 26])
+            (segment [0, 27] - [0, 30]
+              (value [0, 27] - [0, 30]))
+            (open_paren [0, 30] - [0, 31])
+            (close_paren [0, 31] - [0, 32])
+            (back_tick [0, 32] - [0, 33])))
+        (close_bracket [0, 33] - [0, 34]))))
+  (segment_separator [0, 34] - [0, 35])
+  (segment [0, 35] - [0, 38]
+    (value [0, 35] - [0, 38])))
+

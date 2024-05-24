@@ -1,1 +1,1 @@
-foo.bar.{{nested}}.baz
+foo["readonly" = `foo() == bar()`].baz

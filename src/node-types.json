@@ -12,7 +12,19 @@
           "named": true
         },
         {
-          "type": "expression_value",
+          "type": "close_paren",
+          "named": true
+        },
+        {
+          "type": "equals",
+          "named": true
+        },
+        {
+          "type": "open_paren",
+          "named": true
+        },
+        {
+          "type": "segment",
           "named": true
         }
       ]
@@ -139,6 +151,10 @@
     "named": true
   },
   {
+    "type": "close_paren",
+    "named": true
+  },
+  {
     "type": "double_quote",
     "named": true
   },
@@ -147,15 +163,15 @@
     "named": true
   },
   {
-    "type": "expression_value",
-    "named": true
-  },
-  {
     "type": "open_bracket",
     "named": true
   },
   {
     "type": "open_curl",
+    "named": true
+  },
+  {
+    "type": "open_paren",
     "named": true
   },
   {
@@ -168,10 +184,6 @@
   },
   {
     "type": "value",
-    "named": true
-  },
-  {
-    "type": "whitespace",
     "named": true
   }
 ]

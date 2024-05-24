@@ -1,6 +1,6 @@
 module.exports = grammar({
   name: "player_bindings",
-  extras: ($) => [$.whitespace, /[\s\n]*/],
+  extras: ($) => [/[\s\n]*/],
   rules: {
     pathNode: ($) =>
       seq($.segment, repeat(seq($.segment_separator, $.segment))),
@@ -9,11 +9,11 @@ module.exports = grammar({
         choice(
           seq(
             choice($.expression, $.modelRef, $.value, $.query),
-            repeat($.segment),
+            repeat($.segment)
           ),
           seq($.single_quote, $.value, $.single_quote),
-          seq($.double_quote, $.value, $.double_quote),
-        ),
+          seq($.double_quote, $.value, $.double_quote)
+        )
       ),
     modelRef: ($) =>
       seq($.open_curl, $.open_curl, $.pathNode, $.close_curl, $.close_curl),
@@ -22,23 +22,40 @@ module.exports = grammar({
       seq(
         $.open_bracket,
         $.segment,
-        $.equals,
         optional($.equals),
         optional($.equals),
-        $.segment,
-        $.close_bracket,
+        optional($.equals),
+        optional($.segment),
+        $.close_bracket
       ),
-    expression_value: ($) => /[^`]*/,
-    expression: ($) => seq($.back_tick, $.expression_value, $.back_tick),
+    expression: ($) =>
+      prec.left(
+        seq(
+          $.back_tick,
+          repeat(
+            seq(
+              $.segment,
+              repeat(
+                choice(
+                  seq($.open_paren, optional($.segment), $.close_paren),
+                  seq($.equals, optional($.equals), optional($.equals))
+                )
+              )
+            )
+          ),
+          $.back_tick
+        )
+      ),
     equals: ($) => "=",
     segment_separator: ($) => ".",
     single_quote: ($) => "'",
     double_quote: ($) => '"',
-    whitespace: ($) => " ",
     open_curl: ($) => "{",
     close_curl: ($) => "}",
     open_bracket: ($) => "[",
     close_bracket: ($) => "]",
+    open_paren: ($) => "(",
+    close_paren: ($) => ")",
     back_tick: ($) => "`",
   },
 });
