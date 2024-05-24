@@ -5,7 +5,9 @@
   "main": "bindings/node",
   "types": "bindings/node",
   "scripts": {
+    "build:wasm": "tree-sitter build --wasm",
     "parse:example": "tree-sitter parse example.txt",
+    "playground": "pnpm run build:wasm && tree-sitter playground",
     "gen": "tree-sitter generate",
     "test": "tree-sitter test",
     "install": "node-gyp-build",
