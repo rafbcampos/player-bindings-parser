@@ -1,0 +1,30 @@
+foo
+foo.bar
+1234567890_ABC_abc
+a-b-c-d-
+foo[x=something]
+foo[x = something]
+foo[x == something]
+foo[x === something]
+foo["x"         =           "something"]
+foo['x'='hello [!@#$%^&*().]']
+foo['Month'='New[.]]Mo,nth.']
+{{foo}}
+{{hello.world}}
+foo.bar.{{nested}}.baz
+foo[{{bar}}].baz
+foo[a][b][c]
+foo['a']["b"][c="bar"]
+foo[a][b == " [x    ]" ][c]
+_hello_{{world}}
+_hello_{{world}}_foo_
+{{hello}}{{world}}
+{{hello}}_foobar_{{world}}
+{{hello}}_world_
+{{hello}}_world
+foo.{{hello}}_world
+foo.`bar()`.baz
+foo`bar()`.baz
+foo[`bar()`].baz
+foo["readonly" = `foo() == bar()`].baz
+
