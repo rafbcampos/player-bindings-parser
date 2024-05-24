@@ -2,7 +2,7 @@
   "name": "tree-sitter-player",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bindings/node",
   "types": "bindings/node",
   "scripts": {
     "parse:example": "tree-sitter parse example.txt",
